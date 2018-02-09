@@ -115,26 +115,24 @@ public class ShapeLayout extends Application {
 			scene.setOnMouseDragged(dragHandler);
 			scene.setOnMouseReleased(releaseHandler);
 			
-			scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				public void handle(MouseEvent e) {
-					Point2D clickPoint = new Point2D(e.getX(), e.getY());
-					if(shapeIntersectionWithClick(clickPoint) != null) return;
-					else circleHasBeenDragged = false;
-					if(shapeContainerIntersectionWithClick(clickPoint) != null) return;
-					else containerHasBeenDragged = false;
-					
-					MouseButton button = e.getButton();
-					// Right Click creates a shape
-					if(button == MouseButton.PRIMARY && !circleHasBeenDragged && !containerHasBeenDragged) {
-						createShape(clickPoint, defaultColor, root);
-						circleHasBeenDragged = false;
-					}
-					// Left Click creates a shape container
-					else if(button == MouseButton.SECONDARY) {
-						createShapeContainer(clickPoint, root);
-					}
+			scene.setOnMouseClicked((e) -> {
+				Point2D clickPoint = new Point2D(e.getX(), e.getY());
+				if(shapeIntersectionWithClick(clickPoint) != null) return;
+				else circleHasBeenDragged = false;
+				if(shapeContainerIntersectionWithClick(clickPoint) != null) return;
+				else containerHasBeenDragged = false;
+
+				MouseButton button = e.getButton();
+				// Right Click creates a shape
+				if(button == MouseButton.PRIMARY && !circleHasBeenDragged && !containerHasBeenDragged) {
+					createShape(clickPoint, defaultColor, root);
+					circleHasBeenDragged = false;
 				}
-			});
+				// Left Click creates a shape container
+				else if(button == MouseButton.SECONDARY) {
+					createShapeContainer(clickPoint, root);
+				}
+		});
 			
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Lab 3");

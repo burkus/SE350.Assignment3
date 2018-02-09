@@ -3,23 +3,33 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class Shape implements ShapeComponent {
-  private Color color;
+  private Color initialColor;
+  private Color currentColor;
   private Point2D position;
   private boolean moveable;
   private Circle circle;
   private ShapeContainer daddy;
 
   public Shape(Point2D position, Color color, boolean moveable) {
-      this.color = color;
+      initialColor = color;
+      currentColor = color;
       this.position = position;
       this.moveable = moveable;
       circle = new Circle();
       circle.setCenterX(position.getX());
       circle.setCenterY(position.getY());
-      circle.setRadius(10);
+      circle.setRadius(15);
       circle.setFill(color);
       circle.setStroke(Color.BLACK);
-      circle.setStrokeWidth(1);
+      circle.setStrokeWidth(3);
+      // Event Handling
+      circle.setOnMouseEntered((e) -> {
+    	  circle.setFill(initialColor);
+      });
+      
+      circle.setOnMouseExited((e) -> {
+    	  circle.setFill(currentColor);
+      });
   }
 
   public Circle getCircle() {
@@ -27,7 +37,7 @@ public class Shape implements ShapeComponent {
   }
   
   public void setColor(Color color) {
-	  this.color = color;
+	  currentColor = color;
 	  circle.setFill(color);
   }
   

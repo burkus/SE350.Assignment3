@@ -12,7 +12,7 @@ public class ShapeContainer implements ShapeComponent {
   private boolean moveable;
   private List<ShapeComponent> components = new LinkedList<ShapeComponent>();
 
-  public ShapeContainer(Point2D position, boolean moveable) {
+  public ShapeContainer(Point2D position, boolean moveable) { 
     this.position = position;
     this.color = CreateColor.randomColor();
     this.moveable = moveable;
@@ -22,8 +22,8 @@ public class ShapeContainer implements ShapeComponent {
     rect.setWidth(100);
     rect.setHeight(100);
     rect.setStroke(color);
-    rect.setStrokeWidth(2);
-    rect.setFill(color);
+    rect.setStrokeWidth(5);
+    rect.setFill(Color.TRANSPARENT);
   }
 
   public Rectangle getRect() {
@@ -48,6 +48,20 @@ public class ShapeContainer implements ShapeComponent {
   public boolean containsCircle(Circle circle) {
 	  Point2D circleCenter = new Point2D(circle.getCenterX(), circle.getCenterY());
 	  return rect.contains(circleCenter);
+  }
+  
+  public boolean contains(Circle circle) {
+	  Point2D point = new Point2D(circle.getCenterX(), circle.getCenterY());
+	  double x = rect.getX();
+	  double y = rect.getY();
+	  double w = rect.getWidth();
+	  double h = rect.getHeight();
+	  return (
+			  point.getX() < x + w &&
+			  point.getY() < y + h &&
+			  point.getX() > x &&
+			  point.getY() > y
+			 );
   }
 
   public void move(double deltaX, double deltaY) {
